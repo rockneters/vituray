@@ -165,11 +165,8 @@ meu_ip
 clear
 msg -bar2
 figlet " -V2RAY-" | lolcat
-while [[ ! $Key ]]; do
-msg -bar2 && msg -ne "# DIGITE LA KEY #: " && read Key
-tput cuu1 && tput dl1
-done
-msg -ne "# Verificando Key # : "
+
+
 cd $HOME
 
 IP=$(ofus "$Key" | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}') && echo "$IP" > /usr/bin/vendor_code
