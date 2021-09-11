@@ -173,7 +173,6 @@ clear
 msg -bar2
 figlet " -V2RAY-" | lolcat
 
-msg -ne "# Verificando Key # : "
 cd $HOME
 
 IP=$(ofus "$Key" | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}') && echo "$IP" > /usr/bin/vendor_code
@@ -210,7 +209,6 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    echo -e "\033[1;33m Perfecto, utilize el comando\n       \033[1;31mv2r.sh o v2r\n \033[1;33mpara administrar v2ray"
    echo -e "$BARRA"
    echo -ne "\033[0m"
- else
-    invalid_key
+
 fi
 rm -rf install-v2r.sh
