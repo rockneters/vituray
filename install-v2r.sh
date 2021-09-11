@@ -159,13 +159,6 @@ error_fun () {
 msg -bar2 && msg -verm "ERROR de enlace VPS<-->GENERADOR" && msg -bar2
 exit 1
 }
-
-invalid_key () {
-msg -bar2 && msg -verm "#¡Key Invalida#! " && msg -bar2
-[[ -e $HOME/lista-arq ]] && rm $HOME/lista-arq
-exit 1
-}
-
 install_ini
 meu_ip
 
@@ -178,11 +171,7 @@ tput cuu1 && tput dl1
 done
 msg -ne "# Verificando Key # : "
 cd $HOME
-wget -O $HOME/lista-arq $(ofus "$Key")/$IP > /dev/null 2>&1 && echo -e "\033[1;32m Key Completa" || {
-   echo -e "\033[1;91m Key Incompleta"
-   invalid_key
-   exit
-   }
+
 IP=$(ofus "$Key" | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}') && echo "$IP" > /usr/bin/vendor_code
 sleep 1s
 function_verify
@@ -217,7 +206,6 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    echo -e "\033[1;33m Perfecto, utilize el comando\n       \033[1;31mv2r.sh o v2r\n \033[1;33mpara administrar v2ray"
    echo -e "$BARRA"
    echo -ne "\033[0m"
- else
-    invalid_key
+
 fi
 rm -rf install-v2r.sh
