@@ -123,6 +123,29 @@ done
 echo "$txtofus" | rev
 }
 
+verificar_arq () {
+unset ARQ
+case $1 in
+"v2r.sh")ARQ="/usr/bin/";;
+esac
+mv -f ${SCPinstal}/$1 ${ARQ}/$1
+chmod +x ${ARQ}/$1
+}
+
+meu_ip () {
+MIP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
+MIP2=$(wget -qO- ipv4.icanhazip.com)
+[[ "$MIP" != "$MIP2" ]] && IP="$MIP2" || IP="$MIP"
+}
+function_verify () {
+  permited=$(curl -sSL "https://raw.githubusercontent.com/rockneters/vituray/master/IP")
+  [[ $(echo $permited|grep "${IP}") = "" ]] && {
+  echo -e "\n\n\n\033[1;31m====================================================="
+  echo -e "\033[1;31m       ¡LA IP $(wget -qO- ipv4.icanhazip.com) NO ESTA AUTORIZADA!"
+  echo -e "\033[1;31m                CONTACTE A @Rufu99"
+  echo -e "\033[1;31m=====================================================\n\n\n"
+  exit 1
+  } || {
   ### INTALAR VERSION DE SCRIPT
   [[ ! -d /etc/v2r ]] && mkdir /etc/v2r
   ver=$(curl -sSL "https://raw.githubusercontent.com/rockneters/vituray/master/version")
@@ -132,12 +155,34 @@ echo "$txtofus" | rev
   }
 }
 
+error_fun () {
+msg -bar2 && msg -verm "ERROR de enlace VPS<-->GENERADOR" && msg -bar2
+exit 1
+}
+
+invalid_key () {
+msg -bar2 && msg -verm "#¡Key Invalida#! " && msg -bar2
+[[ -e $HOME/lista-arq ]] && rm $HOME/lista-arq
+exit 1
+}
+
+install_ini
+meu_ip
+
 clear
 msg -bar2
 figlet " -V2RAY-" | lolcat
-
+while [[ ! $Key ]]; do
+msg -bar2 && msg -ne "# DIGITE LA KEY #: " && read Key
+tput cuu1 && tput dl1
+done
+msg -ne "# Verificando Key # : "
 cd $HOME
-
+wget -O $HOME/lista-arq $(ofus "$Key")/$IP > /dev/null 2>&1 && echo -e "\033[1;32m Key Completa" || {
+   echo -e "\033[1;91m Key Incompleta"
+   invalid_key
+   exit
+   }
 IP=$(ofus "$Key" | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}') && echo "$IP" > /usr/bin/vendor_code
 sleep 1s
 function_verify
@@ -172,6 +217,7 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    echo -e "\033[1;33m Perfecto, utilize el comando\n       \033[1;31mv2r.sh o v2r\n \033[1;33mpara administrar v2ray"
    echo -e "$BARRA"
    echo -ne "\033[0m"
-
+ else
+    invalid_key
 fi
 rm -rf install-v2r.sh
