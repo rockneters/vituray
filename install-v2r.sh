@@ -159,28 +159,6 @@ msg -bar2
 figlet " -V2RAY-" | lolcat
 
 cd $HOME
-IP=$(ofus "$Key" | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}') && echo "$IP" > /usr/bin/vendor_code
-sleep 1s
-function_verify
-if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") ]]; then
-   msg -bar2
-   msg -e "\033[1;33mDescargando archivos... \033[1;31m[Proyect by @Rufu99]"
-   REQUEST=$(ofus "$Key"|cut -d'/' -f2)
-   [[ ! -d ${SCPinstal} ]] && mkdir ${SCPinstal}
-   for arqx in $(cat $HOME/lista-arq); do
-   echo -ne "\033[1;33mDescargando: \033[1;31m[$arqx] "
-   wget --no-check-certificate -O ${SCPinstal}/${arqx} ${IP}:81/${REQUEST}/${arqx} > /dev/null 2>&1 && {
-    echo -e "\033[1;31m- \033[1;32mRecibido!"
-    verificar_arq "${arqx}"
-   } || {
-    echo -e "\033[1;31m- \033[1;31mFalla (no recibido!)"
-    error_fun
-   }
-   done
-   sleep 1s
-   rm -rf FERRAMENTA KEY KEY! INVALIDA!
-   rm $HOME/lista-arq
-   [[ -d ${SCPinstal} ]] && rm -rf ${SCPinstal}
    echo "/usr/bin/v2r.sh" > /usr/bin/v2r && chmod +x /usr/bin/v2r
    clear
    echo -e "$BARRA"
@@ -193,5 +171,4 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    echo -e "\033[1;33m Perfecto, utilize el comando\n       \033[1;31mv2r.sh o v2r\n \033[1;33mpara administrar v2ray"
    echo -e "$BARRA"
    echo -ne "\033[0m"
-fi
 rm -rf install-v2r.sh
