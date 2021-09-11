@@ -123,29 +123,6 @@ done
 echo "$txtofus" | rev
 }
 
-verificar_arq () {
-unset ARQ
-case $1 in
-"v2r.sh")ARQ="/usr/bin/";;
-esac
-mv -f ${SCPinstal}/$1 ${ARQ}/$1
-chmod +x ${ARQ}/$1
-}
-
-meu_ip () {
-MIP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
-MIP2=$(wget -qO- ipv4.icanhazip.com)
-[[ "$MIP" != "$MIP2" ]] && IP="$MIP2" || IP="$MIP"
-}
-function_verify () {
-  permited=$(curl -sSL "https://raw.githubusercontent.com/rockneters/vituray/master/IP")
-  [[ $(echo $permited|grep "${IP}") = "" ]] && {
-  echo -e "\n\n\n\033[1;31m====================================================="
-  echo -e "\033[1;31m       ¡LA IP $(wget -qO- ipv4.icanhazip.com) NO ESTA AUTORIZADA!"
-  echo -e "\033[1;31m                CONTACTE A @Rufu99"
-  echo -e "\033[1;31m=====================================================\n\n\n"
-  exit 1
-  } || {
   ### INTALAR VERSION DE SCRIPT
   [[ ! -d /etc/v2r ]] && mkdir /etc/v2r
   ver=$(curl -sSL "https://raw.githubusercontent.com/rockneters/vituray/master/version")
@@ -154,20 +131,6 @@ function_verify () {
   [[ -e /usr/bin/v2r ]] && rm -rf /usr/bin/v2r &>/dev/null
   }
 }
-
-error_fun () {
-msg -bar2 && msg -verm "ERROR de enlace VPS<-->GENERADOR" && msg -bar2
-exit 1
-}
-
-invalid_key () {
-msg -bar2 && msg -verm "#¡Key Invalida#! " && msg -bar2
-[[ -e $HOME/lista-arq ]] && rm $HOME/lista-arq
-exit 1
-}
-
-install_ini
-meu_ip
 
 clear
 msg -bar2
