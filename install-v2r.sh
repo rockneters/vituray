@@ -166,12 +166,9 @@ meu_ip
 clear
 msg -bar2
 figlet " -V2RAY-" | lolcat
-msg -ne "# Verificando Key # : "
 cd $HOME
 sleep 1s
-function_verify
-if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") ]]; then
-   [[ ! -d ${SCPinstal} ]] && mkdir ${SCPinstal}
+[[ ! -d ${SCPinstal} ]] && mkdir ${SCPinstal}
    for arqx in $(cat $HOME/lista-arq); do
    echo -ne "\033[1;33mDescargando: \033[1;31m[$arqx] "
    wget --no-check-certificate -O ${SCPinstal}/${arqx} ${IP}:81/${REQUEST}/${arqx} > /dev/null 2>&1 && {
@@ -198,7 +195,4 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    echo -e "\033[1;33m Perfecto, utilize el comando\n       \033[1;31mv2r.sh o v2r\n \033[1;33mpara administrar v2ray"
    echo -e "$BARRA"
    echo -ne "\033[0m"
- else
-    #invalid_key
-fi
 rm -rf install-v2r.sh
