@@ -160,12 +160,6 @@ msg -bar2 && msg -verm "ERROR de enlace VPS<-->GENERADOR" && msg -bar2
 exit 1
 }
 
-invalid_key () {
-msg -bar2 && msg -verm "#¡Key Invalida#! " && msg -bar2
-[[ -e $HOME/lista-arq ]] && rm $HOME/lista-arq
-exit 1
-}
-
 install_ini
 meu_ip
 
@@ -218,6 +212,6 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    echo -e "$BARRA"
    echo -ne "\033[0m"
  else
-    invalid_key
+    #invalid_key
 fi
 rm -rf install-v2r.sh
