@@ -26,13 +26,16 @@ echo -e "\033[97m  # apt-get install bc................... $ESTATUS "
 echo -e "\033[97m  # apt-get install jq................... $ESTATUS "
 #curl
 [[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] || apt-get install curl -y &>/dev/null
-[[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] || curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &>/dev/null
-[[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] || apt-get install build-essential nodejs &>/dev/null
+[[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] || curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 [[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] || ESTATUS=`echo -e "\033[91mFALLO DE INSTALACION"` &>/dev/null
 [[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] && ESTATUS=`echo -e "\033[92mINSTALADO"` &>/dev/null
 echo -e "\033[97m  # apt-get install curl................. $ESTATUS "
 #npm
-[[ $(dpkg --get-selections|grep -w "npm"|head -1) ]] || apt-get install npm -y &>/dev/null
+[[ $(dpkg --get-selections|grep -w "npm"|head -1) ]] || apt install aptitude
+[[ $(dpkg --get-selections|grep -w "npm"|head -1) ]] || aptitude install libnode-dev                        
+[[ $(dpkg --get-selections|grep -w "npm"|head -1) ]] || aptitude install libnode64
+[[ $(dpkg --get-selections|grep -w "npm"|head -1) ]] || aptitude install node-gyp
+[[ $(dpkg --get-selections|grep -w "npm"|head -1) ]] || aptitude install npm -Y &>/dev/null
 [[ $(dpkg --get-selections|grep -w "npm"|head -1) ]] || ESTATUS=`echo -e "\033[91mFALLO DE INSTALACION"` &>/dev/null
 [[ $(dpkg --get-selections|grep -w "npm"|head -1) ]] && ESTATUS=`echo -e "\033[92mINSTALADO"` &>/dev/null
 echo -e "\033[97m  # apt-get install npm.................. $ESTATUS "
