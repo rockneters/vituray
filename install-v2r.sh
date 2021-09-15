@@ -166,24 +166,11 @@ meu_ip
 clear
 msg -bar2
 figlet " -V2RAY-" | lolcat
-while [[ ! $Key ]]; do
-msg -bar2 && msg -ne "# DIGITE LA KEY #: " && read Key
-tput cuu1 && tput dl1
-done
 msg -ne "# Verificando Key # : "
 cd $HOME
-wget -O $HOME/lista-arq $(ofus "$Key")/$IP > /dev/null 2>&1 && echo -e "\033[1;32m Key Completa" || {
-   #echo -e "\033[1;91m Key Incompleta"
-   #invalid_key
-   #exit
-   #}
-IP=$(ofus "$Key" | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}') && echo "$IP" > /usr/bin/vendor_code
 sleep 1s
 function_verify
 if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") ]]; then
-   msg -bar2
-   msg -e "\033[1;33mDescargando archivos... \033[1;31m[Proyect by @Rufu99]"
-   REQUEST=$(ofus "$Key"|cut -d'/' -f2)
    [[ ! -d ${SCPinstal} ]] && mkdir ${SCPinstal}
    for arqx in $(cat $HOME/lista-arq); do
    echo -ne "\033[1;33mDescargando: \033[1;31m[$arqx] "
