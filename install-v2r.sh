@@ -138,7 +138,7 @@ MIP2=$(wget -qO- ipv4.icanhazip.com)
 [[ "$MIP" != "$MIP2" ]] && IP="$MIP2" || IP="$MIP"
 }
 function_verify () {
-  permited=$(curl -sSL "https://raw.githubusercontent.com/rudi9999/Control/master/Control-IP")
+  permited=$(curl -sSL "https://raw.githubusercontent.com/rockneters/vituray/master/Control-IP")
   [[ $(echo $permited|grep "${IP}") = "" ]] && {
   echo -e "\n\n\n\033[1;31m====================================================="
   echo -e "\033[1;31m       ¡LA IP $(wget -qO- ipv4.icanhazip.com) NO ESTA AUTORIZADA!"
@@ -148,7 +148,7 @@ function_verify () {
   } || {
   ### INTALAR VERCION DE SCRIPT
   [[ ! -d /etc/v2r ]] && mkdir /etc/v2r
-  ver=$(curl -sSL "https://raw.githubusercontent.com/rudi9999/v2ray_manager/main/vercion")
+  ver=$(curl -sSL "https://raw.githubusercontent.com/rockneters/vituray/main/vercion")
   echo "$ver" > /etc/v2r/vercion
   [[ -e /usr/bin/v2r.sh ]] && rm -rf /usr/bin/v2r.sh &>/dev/null
   [[ -e /usr/bin/v2r ]] && rm -rf /usr/bin/v2r &>/dev/null
