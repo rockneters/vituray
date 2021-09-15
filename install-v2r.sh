@@ -26,6 +26,8 @@ echo -e "\033[97m  # apt-get install bc................... $ESTATUS "
 echo -e "\033[97m  # apt-get install jq................... $ESTATUS "
 #curl
 [[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] || apt-get install curl -y &>/dev/null
+[[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] || curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &>/dev/null
+[[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] || apt-get install build-essential nodejs &>/dev/null
 [[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] || ESTATUS=`echo -e "\033[91mFALLO DE INSTALACION"` &>/dev/null
 [[ $(dpkg --get-selections|grep -w "curl"|head -1) ]] && ESTATUS=`echo -e "\033[92mINSTALADO"` &>/dev/null
 echo -e "\033[97m  # apt-get install curl................. $ESTATUS "
@@ -77,27 +79,14 @@ sudo gem install lolcat &>/dev/null
 echo -e "\033[97m  # apt-get install lolcat............... $ESTATUS "
 
 echo -e "$BARRA"
-echo -e "\033[92m La instalacion de paquetes necesarios a finalizado"
+echo -e "\033[92m The installation of necessary packages is complete"
 echo -e "$BARRA"
-echo -e "\033[97m Si la instalacion de paquetes tiene fallas"
-echo -ne "\033[97m Puede intentar de nuevo [s/n]: "
+echo -e "\033[97m If the package installation is faulty"
+echo -ne "\033[97m Can try again [s/n]: "
 read inst
 [[ $inst = @(s|S|y|Y) ]] && install_ini
 }
 
-msg () {
-BRAN='\033[1;37m' && VERMELHO='\e[31m' && VERDE='\e[32m' && AMARELO='\e[33m'
-AZUL='\e[34m' && MAGENTA='\e[35m' && MAG='\033[1;36m' &&NEGRITO='\e[1m' && SEMCOR='\e[0m'
- case $1 in
-  -ne)cor="${VERMELHO}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
-  -ama)cor="${AMARELO}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
-  -verm)cor="${AMARELO}${NEGRITO}[!] ${VERMELHO}" && echo -e "${cor}${2}${SEMCOR}";;
-  -azu)cor="${MAG}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
-  -verd)cor="${VERDE}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
-  -bra)cor="${VERMELHO}" && echo -ne "${cor}${2}${SEMCOR}";;
-  "-bar2"|"-bar")cor="${VERMELHO}======================================================" && echo -e "${SEMCOR}${cor}${SEMCOR}";;
- esac
-}
 
 ofus () {
 unset server
